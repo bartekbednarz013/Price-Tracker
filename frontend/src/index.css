@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --main-margin: 15px;
+  /* przy zmianie, zmienić też w meta tagu w html */
+  --light-category-background-color: var(--light-background-color);
+  --dark-category-background-color: rgb(49, 50, 68) /*rgb(30, 30, 30)*/;
+  --category-background-color: var(--light-category-background-color);
+  --light-color: rgb(0, 0, 0);
+  --dark-color: rgb(217, 217, 217);
+  --color: var(--light-color);
+  --light-background-color: rgb(255, 255, 255);
+  --dark-background-color: rgb(23, 27, 48) /*rgb(18, 18, 18)*/;
+  --background-color: var(--light-background-color);
+  --light-link-color: rgb(81, 82, 250) /*rgb(84, 105, 212)*/;
+  --dark-link-color: rgb(81, 82, 250);
+  --link-color: var(--light-link-color);
+  --light-input-text-background-color: var(--light-background-color);
+  --dark-input-text-background-color: var(--dark-color);
+  --input-text-background-color: var(--light-input-text-background-color);
+  --light-button-color: rgb(255, 255, 255);
+  --dark-button-color: var(--dark-color);
+  --button-color: var(--light-button-color);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  scroll-behavior: smooth;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  color: black;
+  background: white;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  padding: 15px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* tablets */
+@media screen and (min-width: 600px) {
+}
+
+/* desktop */
+@media screen and (min-width: 960px) {
+}

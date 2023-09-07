@@ -1,0 +1,13 @@
+.password-grid {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  align-items: center;
+}
+
+.reset-password a {
+  text-align: right;
+  margin: 2px 0 10px;
+  font-size: 12px;
+  font-weight: 600;
+  display: block;
+}

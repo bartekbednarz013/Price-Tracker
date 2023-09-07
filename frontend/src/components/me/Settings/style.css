@@ -1,0 +1,116 @@
+.settings-wrapper {
+  width: 448px;
+}
+
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.user-settings-title {
+  font-size: 17px;
+  line-height: 17px;
+  font-weight: 500;
+  padding: 0 0 20px;
+}
+
+.user-settings-wrapper {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.user-settings-inner-wrapper {
+  width: 100%;
+}
+
+.user-info-field,
+.user-settings-field {
+  margin-bottom: 12px;
+}
+
+.user-settings-field {
+  width: 50%;
+}
+
+.last-user-settings-field {
+  margin-bottom: 0;
+}
+
+.user-info-field h3,
+.user-settings-field h3 {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.show-change-password-button,
+.show-delete-account-button,
+.set-prev-image {
+  color: var(--link-color);
+  cursor: pointer;
+}
+
+.change-password-form,
+.delete-account-form {
+  display: none;
+}
+
+.change-password-form .form-field {
+  margin-top: 7px;
+  padding-bottom: 0;
+}
+
+.change-password-form .submit-field {
+  padding: 0;
+}
+
+.show-password {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+  margin-top: 7px;
+  padding-bottom: 5px;
+}
+
+.show-password label,
+.delete-account-form label {
+  font-size: 14px;
+  line-height: 14px;
+  font-weight: unset;
+  margin-bottom: 0;
+}
+
+.login-form .show-password {
+  padding-bottom: 24px;
+}
+
+.delete-account-input {
+  display: flex;
+  align-items: center;
+  column-gap: 7px;
+}
+
+.delete-account-form label {
+  line-height: unset;
+}
+
+.delete-account-form .submit-field {
+  padding-top: 10px;
+}
+
+.logout-link {
+  height: 24px;
+  display: flex;
+  align-items: center;
+  column-gap: 7px;
+  color: var(--link-color);
+}
+
+.logout-link span {
+  line-height: 15px;
+}
+
+.logout-link svg {
+  height: 70%;
+}

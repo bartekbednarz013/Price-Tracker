@@ -1,0 +1,52 @@
+:root {
+  --name-col-width: 300px;
+}
+
+th {
+  height: 45px;
+  line-height: 25px;
+  vertical-align: baseline;
+}
+
+/* tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.03);
+} */
+
+tbody tr {
+  box-shadow: 0 3px 3px -3px rgba(0, 0, 0, 0.25);
+}
+
+tbody tr:last-child {
+  box-shadow: none;
+}
+
+td {
+  height: 50px;
+  line-height: 50px;
+  /* vertical-align: middle; */
+  text-align: center;
+}
+
+.td-name {
+  max-width: calc(var(--name-col-width) - 30px);
+  display: block;
+  white-space: nowrap;
+  overflow-x: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.th-name,
+.th-shop,
+.td-shop,
+.td-name {
+  text-align: left;
+}
+
+/* .td-tracked {
+  text-align: center;
+} */
+
+.td-name::-webkit-scrollbar {
+  display: none;
+}

@@ -1,0 +1,22 @@
+.button {
+  font-size: 16px;
+  line-height: 28px;
+  padding: 8px 16px;
+  min-height: 44px;
+  min-width: 70px;
+  border: unset;
+  border-radius: 4px;
+  outline-color: rgb(84 105 212 / 0.5);
+  background-color: var(--input-text-background-color);
+  box-shadow: rgb(60 66 87 / 16%) 0px 0px 0px 1px;
+  color: var(--button-color);
+  background-color: var(--link-color);
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 1px 0px,
+    var(--link-color) 0px 0px 0px 1px, rgba(60, 66, 87, 0.08) 0px 2px 5px 0px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button:active {
+  background-color: rgb(81, 143, 250);
+}

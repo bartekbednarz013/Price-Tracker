@@ -1,0 +1,24 @@
+.hidden-input input {
+  font-size: 16px;
+  padding: 4px 8px;
+  width: 90%;
+  border: unset;
+  border-radius: 4px;
+  outline-color: rgb(84 105 212 / 0.5);
+  background-color: var(--input-text-background-color);
+  box-shadow: rgb(60 66 87 / 16%) 0px 0px 0px 1px;
+}
+
+.hidden input {
+  padding: 0;
+  line-height: unset;
+  min-height: unset;
+  outline-color: unset;
+  box-shadow: none;
+  font-weight: 500;
+}
+
+.hidden-input input:disabled {
+  cursor: default;
+  color: inherit;
+}
