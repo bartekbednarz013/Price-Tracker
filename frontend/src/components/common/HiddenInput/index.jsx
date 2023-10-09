@@ -9,14 +9,14 @@ const HiddenInput = ({
   required,
   disabled,
 }) => (
-  <div className="hidden-input hidden">
+  <div id={id} className="hidden-input hidden">
     <input
       type={type}
-      id={id}
       name={inputName}
       value={value}
       onChange={onChange}
       required={required}
+      disabled={disabled}
     />
   </div>
 );

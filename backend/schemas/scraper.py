@@ -7,6 +7,7 @@ class ScraperInputSchema(BaseModel):
 
 
 class ScraperOutputSchema(BaseModel):
+    url: str
     name: str
     shop: str
     price: float

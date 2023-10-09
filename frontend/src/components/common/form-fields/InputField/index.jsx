@@ -10,11 +10,17 @@ const InputField = ({
   onChange,
   required,
   disabled,
+  additionalClassName,
+  minValue,
+  maxValue,
+  minLength,
+  maxLength,
 }) => (
-  <div className="form-field">
-    {label && <label htmlFor={label}>{label}</label>}
+  <div className={'form-field ' + (additionalClassName ?? '')}>
+    {label && <label htmlFor={inputName}>{label}</label>}
     <input
       type={type}
+      id={inputName}
       name={inputName}
       value={value}
       checked={checked}
@@ -22,6 +28,10 @@ const InputField = ({
       onChange={onChange}
       required={required}
       disabled={disabled}
+      min={minValue}
+      max={maxValue}
+      minLength={minLength}
+      maxLength={maxLength}
     />
   </div>
 );

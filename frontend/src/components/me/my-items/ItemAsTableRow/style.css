@@ -1,0 +1,64 @@
+td {
+  height: 50px;
+  line-height: 50px;
+  /* vertical-align: middle; */
+  text-align: center;
+}
+
+.td-name {
+  max-width: calc(var(--name-col-width) - 30px);
+  display: block;
+  white-space: nowrap;
+  overflow-x: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  /* color: var(--link-color); */
+  cursor: pointer;
+}
+
+.th-name,
+.th-shop,
+.td-shop,
+.td-name {
+  text-align: left;
+}
+
+.td-name::-webkit-scrollbar {
+  display: none;
+}
+
+.td-expected-price input {
+  padding: 4px 8px;
+  width: 75px;
+  font-size: 16px;
+  line-height: 28px;
+  border: unset;
+  border-radius: 4px;
+  outline-color: rgb(84 105 212 / 0.5);
+  background-color: var(--input-text-background-color);
+  box-shadow: rgb(60 66 87 / 16%) 0px 0px 0px 1px;
+}
+
+.flex-options-wrapper {
+  display: flex;
+  column-gap: 20px;
+  justify-content: right;
+}
+
+.cell-content-flex-wrapper {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.td-tracked input {
+  height: 20px;
+  width: 20px;
+}
+
+.icon {
+  height: 34px;
+  width: 34px;
+  cursor: pointer;
+}

@@ -1,6 +1,14 @@
 import './style.css';
-import { Link, Navigate } from 'react-router-dom';
+import InputField from '../../common/form-fields/InputField';
+import SubmitField from '../../common/form-fields/SubmitField';
+import { Link, useNavigate } from 'react-router-dom';
 import { Fragment, useState } from 'react';
+import {
+  useLazyRegisterQuery,
+  // useLazyLoginQuery,
+} from '../../../features/api/apiSlice';
+import { useSelector } from 'react-redux';
+import ShowPassword from '../../common/form-fields/ShowPassword';
 
 const Register = () => {
   const initialValues = {
@@ -11,6 +19,16 @@ const Register = () => {
   };
 
   const [state, setState] = useState(initialValues);
+
+  const [register] = useLazyRegisterQuery();
+  // const [login] = useLazyLoginQuery();
+
+  const navigate = useNavigate();
+
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  if (isAuthenticated) {
+    navigate('/me');
+  }
 
   const onChange = (e) =>
     setState({ ...state, [e.target.name]: e.target.value });
@@ -26,9 +44,15 @@ const Register = () => {
     }
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    // this.props.login(state.username, state.password);
+
+    if (state.password === state.password2) {
+      const { isError } = await register(state);
+      if (!isError) {
+        navigate('/auth/login');
+      }
+    }
   };
 
   return (
@@ -36,75 +60,43 @@ const Register = () => {
       <div className="register-wrapper">
         <div className="auth-header">Create account</div>
         <form className="register-form" onSubmit={onSubmit}>
-          <div className="form-field">
-            <label htmlFor="username">Login</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              onChange={onChange}
-              className="login-form-input"
-              value={state.username}
-              required
-            />
-          </div>
-          <div className="form-field">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              onChange={onChange}
-              className="login-form-input"
-              value={state.email}
-              required
-            />
-          </div>
-          <div className="form-field">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              onChange={onChange}
-              className="login-form-input"
-              value={state.password}
-              required
-              minLength="6"
-            />
-          </div>
-
-          <div className="form-field field-before-show-password">
-            <label htmlFor="password2">Confirm password</label>
-            <input
-              type="password"
-              id="password2"
-              name="password2"
-              onChange={onChange}
-              className="login-form-input"
-              value={state.password2}
-              required
-              minLength="6"
-            />
-          </div>
-          <div className="show-password">
-            <input
-              type="checkbox"
-              id="showPassword"
-              name="showPassword"
-              onChange={showPassword}
-              className="login-form-input"
-              placeholder="Show password"
-            />
-            <label htmlFor="showPassword">Show password</label>
-          </div>
-          <div className="form-field submit-field">
-            <input
-              type="submit"
-              value="Sign up"
-              className="login-register-submit"
-            />
-          </div>
+          <InputField
+            label="Username"
+            type="text"
+            inputName="username"
+            onChange={onChange}
+            value={state.username}
+            required={true}
+          />
+          <InputField
+            label="Email"
+            type="email"
+            inputName="email"
+            onChange={onChange}
+            value={state.email}
+            required={true}
+          />
+          <InputField
+            label="Password"
+            type="password"
+            inputName="password"
+            onChange={onChange}
+            value={state.password}
+            required={true}
+            minLength="6"
+          />
+          <InputField
+            label="Confirm password"
+            type="password"
+            inputName="password2"
+            onChange={onChange}
+            value={state.password2}
+            required={true}
+            minLength="6"
+            additionalClassName="field-before-show-password"
+          />
+          <ShowPassword onChange={showPassword} />
+          <SubmitField value="Sign up" />
         </form>
       </div>
       <div className="login-register-redirect">

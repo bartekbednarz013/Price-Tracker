@@ -51,7 +51,7 @@ async def update_expected_price(db: Session, item_id: int, expected_price: float
     return item
 
 
-async def update_track_status(db: Session, item_id: int, tracked: bool) -> ItemModel:
+async def update_tracking_status(db: Session, item_id: int, tracked: bool) -> ItemModel:
     item = db.query(ItemModel).get(item_id)
     item.tracked = tracked
     db.commit()
@@ -61,3 +61,7 @@ async def update_track_status(db: Session, item_id: int, tracked: bool) -> ItemM
 
 async def read_all_user_items(db: Session, user_id: int) -> list[ItemModel]:
     return db.query(ItemModel).filter(ItemModel.user_id == user_id).all()
+
+
+async def check_if_already_exist(db: Session, url:str, user_id) -> ItemModel:
+    return db.query(ItemModel).filter(ItemModel.url == url, ItemModel.user_id == user_id).first()

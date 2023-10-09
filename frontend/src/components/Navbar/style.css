@@ -1,6 +1,6 @@
 :root {
   --navbar-height: 60px;
-  --icon-navbar-ratio: 0.6;
+  --icon-navbar-ratio: 0.65;
 }
 
 .navbar {
@@ -22,6 +22,9 @@
 .navbar-link {
   height: calc(var(--navbar-height) * var(--icon-navbar-ratio));
   width: calc(var(--navbar-height) * var(--icon-navbar-ratio));
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .account-link svg {

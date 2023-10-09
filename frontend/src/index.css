@@ -59,6 +59,23 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+.loading,
+.mini-loading {
+  background-image: url(../src/gif/loading.gif);
+  background-size: 50%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  height: 300px;
+  width: 300px;
+  margin: auto;
+}
+
+.mini-loading {
+  height: 100%;
+  width: 100%;
+  background-size: 75%;
+}
+
 /* tablets */
 @media screen and (min-width: 600px) {
 }

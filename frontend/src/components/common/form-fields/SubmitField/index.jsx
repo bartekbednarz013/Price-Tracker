@@ -1,8 +1,8 @@
 import './style.css';
 
-const SubmitField = ({ value }) => (
+const SubmitField = ({ value, id, disabled }) => (
   <div className="form-field submit-field">
-    <input type="submit" value={value} />
+    <input type="submit" id={id} value={value} disabled={disabled} />
   </div>
 );
 

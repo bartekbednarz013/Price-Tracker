@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from database.models import UserModel
 from schemas.user import UserCreateSchema
+from schemas.auth import ChangePasswordSchema
 from functions import verify_password, hash_password
 
 
@@ -41,8 +42,21 @@ def authenticate_user(db: Session, username: str, password: str):
     return (user, "Successfully authenticated")
 
 
-async def edit_users_tracked_items(db: Session, user_id: int, tracked: bool):
+async def increase_user_tracked_items(db: Session, user_id: int):
     user = db.query(UserModel).get(user_id)
-    tracked_items = user.tracked_items
-    user.tracked_items = tracked_items+1 if tracked else tracked_items-1
+    user.tracked_items += 1
     db.commit()
+
+
+async def decrease_user_tracked_items(db: Session, user_id: int):
+    user = db.query(UserModel).get(user_id)
+    user.tracked_items -= 1
+    db.commit()
+
+
+def set_new_password(db:Session, user_id: int, new_password: str):
+    hashed_password = hash_password(new_password)
+    user = db.query(UserModel).get(user_id)
+    user.password = hashed_password
+    db.commit()
+    return user

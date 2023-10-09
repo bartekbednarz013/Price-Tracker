@@ -1,12 +1,12 @@
-from pydantic import BaseModel, AnyUrl
+from pydantic import BaseModel, Field
 
 
 class ItemCreateSchema(BaseModel):
     name: str
     shop: str
     url: str
-    price: float
-    expected_price: float | None = None 
+    price: float = Field(ge=0)
+    expected_price: float | None = Field(default=None, ge=0) 
     currency: str
     tracked: bool
 

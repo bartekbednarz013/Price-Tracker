@@ -1,6 +1,10 @@
 import './style.css';
+import InputField from '../../common/form-fields/InputField';
+import SubmitField from '../../common/form-fields/SubmitField';
 import { Link, Navigate } from 'react-router-dom';
 import { Fragment, useState } from 'react';
+import { useLazyLoginQuery } from '../../../features/api/apiSlice';
+import { useSelector } from 'react-redux';
 
 const Login = () => {
   const initialValues = {
@@ -10,34 +14,34 @@ const Login = () => {
 
   const [state, setState] = useState(initialValues);
 
+  const [login] = useLazyLoginQuery();
+
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  if (isAuthenticated) {
+    return <Navigate to="/me" />;
+  }
+
   const onChange = (e) =>
     setState({ ...state, [e.target.name]: e.target.value });
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    await login(state);
   };
-
-  // if (this.props.isAuthenticated) {
-  //   return <Navigate to="/account" />;
-  // }
 
   return (
     <Fragment>
       <div className="login-wrapper">
         <div className="auth-header">Login</div>
         <form className="login-form" onSubmit={onSubmit}>
-          <div className="form-field">
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              onChange={onChange}
-              className="login-form-input"
-              value={state.username}
-              required
-            />
-          </div>
+          <InputField
+            label="Username"
+            type="text"
+            inputName="username"
+            onChange={onChange}
+            value={state.username}
+            required={true}
+          />
           <div className="form-field">
             <div className="password-grid">
               <label htmlFor="password">Password</label>
@@ -51,19 +55,12 @@ const Login = () => {
               type="password"
               id="password"
               name="password"
-              className="login-form-input"
               onChange={onChange}
               value={state.password}
               required
             />
           </div>
-          <div className="form-field submit-field">
-            <input
-              type="submit"
-              value="Login"
-              className="login-register-submit"
-            />
-          </div>
+          <SubmitField value="Login" />
         </form>
       </div>
       <div className="login-register-redirect">

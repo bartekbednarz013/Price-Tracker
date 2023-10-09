@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import InputField from '../../common/form-fields/InputField';
+import SubmitField from '../../common/form-fields/SubmitField';
 
 const SetPassword = () => {
-  initialValues = {
+  const initialValues = {
     password: '',
     password2: '',
   };

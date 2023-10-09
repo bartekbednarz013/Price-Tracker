@@ -8,7 +8,7 @@ from crud.user import read_user_by_username
 from functions import decode_username_from_token
 
 
-oauth2 = OAuth2PasswordBearer(tokenUrl="login")
+oauth2 = OAuth2PasswordBearer(tokenUrl="login-swagger")
 
 
 def get_db():

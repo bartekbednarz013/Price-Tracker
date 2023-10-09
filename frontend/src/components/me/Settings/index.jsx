@@ -1,17 +1,32 @@
 import './style.css';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { ReactComponent as Logout } from '../../../svg/logout.svg';
+import { userLoggedOut } from '../../../features/auth/authSlice';
+import {
+  useLazyDeleteAccountQuery,
+  useLazyChangePasswordQuery,
+} from '../../../features/api/apiSlice';
+import { apiSlice } from '../../../features/api/apiSlice';
+import InputField from '../../common/form-fields/InputField';
+import SubmitField from '../../common/form-fields/SubmitField';
+import ShowPassword from '../../common/form-fields/ShowPassword';
 
 const Settings = () => {
   const initialValues = {
-    username: 'Bartek',
-    email: 'bartek123@gmail.com',
     password: '',
     password2: '',
   };
 
   const [state, setState] = useState(initialValues);
+
+  const { username, email } = useSelector((state) => state.auth.user);
+
+  const dispatch = useDispatch();
+
+  const [deleteAccountQuery] = useLazyDeleteAccountQuery();
+  const [changePasswordQuery] = useLazyChangePasswordQuery();
 
   const openPasswordChanger = () => {
     document.querySelector('.show-change-password-button').style.display =
@@ -20,7 +35,8 @@ const Settings = () => {
     document.getElementById('password').focus();
   };
 
-  const onChange = (e) => setState({ [e.target.name]: e.target.value });
+  const onChange = (e) =>
+    setState({ ...state, [e.target.name]: e.target.value });
 
   const showPassword = () => {
     const showPasswordCheckbox = document.getElementById('showPassword');
@@ -33,8 +49,12 @@ const Settings = () => {
     }
   };
 
-  const changePassword = (e) => {
+  const changePassword = async (e) => {
     e.preventDefault();
+    if (state.password === state.password2) {
+      const { isError } = await changePasswordQuery(state.password);
+      if (!isError) setState(initialValues);
+    }
   };
 
   const openAccountDeleter = () => {
@@ -43,13 +63,15 @@ const Settings = () => {
     document.querySelector('.delete-account-form').style.display = 'block';
   };
 
-  const deleteAccount = (e) => {
+  const deleteAccount = async (e) => {
     e.preventDefault();
-    // this.props.deleteAccount();
+    await deleteAccountQuery();
+    dispatch(apiSlice.util.resetApiState());
   };
 
   const logout = () => {
-    console.log('Logout');
+    dispatch(userLoggedOut());
+    dispatch(apiSlice.util.resetApiState());
   };
 
   return (
@@ -64,11 +86,11 @@ const Settings = () => {
       <div className="user-settings">
         <div className="user-info-field">
           <h3>Username</h3>
-          <p>{state.username}</p>
+          <p>{username}</p>
         </div>
         <div className="user-info-field">
           <h3>Email</h3>
-          <p>{state.email}</p>
+          <p>{email}</p>
         </div>
 
         <div className="user-settings-field">
@@ -80,50 +102,28 @@ const Settings = () => {
             Change password
           </p>
           <form onSubmit={changePassword} className="change-password-form">
-            <div className="form-field">
-              <input
-                type="password"
-                id="password"
-                name="password"
-                onChange={onChange}
-                className="login-form-input"
-                value={state.password}
-                required
-                placeholder="Enter new password"
-                minLength="6"
-              />
-            </div>
-            <div className="form-field">
-              <input
-                type="password"
-                id="password2"
-                name="password2"
-                onChange={onChange}
-                className="login-form-input"
-                value={state.password2}
-                required
-                placeholder="Confirm new password"
-                minLength="6"
-              />
-            </div>
-            <div className="show-password">
-              <input
-                type="checkbox"
-                id="showPassword"
-                name="showPassword"
-                onChange={showPassword}
-                className="login-form-input"
-                placeholder="Show password"
-              />
-              <label htmlFor="showPassword">Show password</label>
-            </div>
-            <div className="form-field submit-field">
-              <input
-                type="submit"
-                value="Set new password"
-                className="login-register-submit"
-              />
-            </div>
+            <InputField
+              type="password"
+              id="password"
+              inputName="password"
+              onChange={onChange}
+              value={state.password}
+              placeholder="Enter new password"
+              minLength="6"
+              required={true}
+            />
+            <InputField
+              type="password"
+              id="password2"
+              inputName="password2"
+              onChange={onChange}
+              value={state.password2}
+              placeholder="Confirm new password"
+              minLength="6"
+              required={true}
+            />
+            <ShowPassword onChange={showPassword} />
+            <SubmitField value="Set new password" />
           </form>
         </div>
         <div className="user-settings-field last-user-settings-field">
@@ -140,20 +140,13 @@ const Settings = () => {
                 type="checkbox"
                 id="delete-account-checkbox"
                 name="delete-account-checkbox"
-                className="login-form-input"
                 required
               />
               <label htmlFor="delete-account-checkbox">
                 I want to delete my account.
               </label>
             </div>
-            <div className="form-field submit-field">
-              <input
-                type="submit"
-                value="Delete account"
-                className="login-register-submit"
-              />
-            </div>
+            <SubmitField value="Delete account" />
           </form>
         </div>
       </div>

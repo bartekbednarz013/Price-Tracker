@@ -1,19 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
 import './index.css';
 import Navbar from './components/Navbar';
 import Content from './components/Content';
+import Notification from './components/Notification';
 
 // import reportWebVitals from './reportWebVitals';
+
+// let persistor = persistStore(store);
+// persistor.purge();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Navbar />
-      <Content />
-    </BrowserRouter>
+    <Provider store={store}>
+      {/* <PersistGate loading={null} persistor={persistor}> */}
+      <BrowserRouter>
+        <Navbar />
+        <Content />
+        <Notification />
+      </BrowserRouter>
+      {/* </PersistGate> */}
+    </Provider>
   </React.StrictMode>
 );
 

@@ -1,7 +1,10 @@
 import './style.css';
 import ItemAsTableRow from '../ItemAsTableRow';
+import { useSelector, shallowEqual } from 'react-redux';
 
 const MyItemsTable = () => {
+  const { items } = useSelector((state) => state.items, shallowEqual);
+
   return (
     <div className="my-items">
       <table>
@@ -16,6 +19,7 @@ const MyItemsTable = () => {
           <col style={{ minWidth: '120px', maxWidth: '120px' }} />
           <col style={{ minWidth: '160px', maxWidth: '160px' }} />
           <col style={{ minWidth: '80px', maxWidth: '80px' }} />
+          <col style={{ minWidth: '130px', maxWidth: '130px' }} />
         </colgroup>
         <thead>
           <tr>
@@ -24,14 +28,13 @@ const MyItemsTable = () => {
             <th>Price</th>
             <th>Expected price</th>
             <th>Tracked</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          <ItemAsTableRow />
-          <ItemAsTableRow />
-          <ItemAsTableRow />
-          <ItemAsTableRow />
-          <ItemAsTableRow />
+          {items.map((item) => (
+            <ItemAsTableRow item={item} key={item.id} />
+          ))}
         </tbody>
       </table>
     </div>
