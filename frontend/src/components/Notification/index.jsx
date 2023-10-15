@@ -12,9 +12,9 @@ const Notification = () => {
     if (notifications.length > 0) {
       setNotification(notifications[notifications.length - 1]);
       setShow(true);
-      // setTimeout(() => {
-      //   setShow(false);
-      // }, 3000);
+      setTimeout(() => {
+        setShow(false);
+      }, 3000);
     }
   }, [notifications]);
 

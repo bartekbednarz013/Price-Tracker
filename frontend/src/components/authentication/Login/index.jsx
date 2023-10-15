@@ -14,7 +14,7 @@ const Login = () => {
 
   const [state, setState] = useState(initialValues);
 
-  const [login] = useLazyLoginQuery();
+  const [loginQuery] = useLazyLoginQuery();
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   if (isAuthenticated) {
@@ -26,7 +26,7 @@ const Login = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await login(state);
+    await loginQuery(state);
   };
 
   return (
@@ -37,7 +37,7 @@ const Login = () => {
           <InputField
             label="Username"
             type="text"
-            inputName="username"
+            name="username"
             onChange={onChange}
             value={state.username}
             required={true}
@@ -46,7 +46,7 @@ const Login = () => {
             <div className="password-grid">
               <label htmlFor="password">Password</label>
               <div className="reset-password">
-                <Link to="../reset-password" className="reset-password-link">
+                <Link to="/auth/reset-password" className="reset-password-link">
                   Forgot password?
                 </Link>
               </div>

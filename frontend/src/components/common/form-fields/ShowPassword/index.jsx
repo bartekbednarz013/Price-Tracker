@@ -1,3 +1,5 @@
+import './style.css';
+
 const ShowPassword = ({ onChange }) => {
   return (
     <div className="show-password">

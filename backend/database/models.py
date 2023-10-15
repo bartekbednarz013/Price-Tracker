@@ -9,8 +9,11 @@ class UserModel(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     email = Column(EmailType, unique=True)
-    username = Column(String)
+    username = Column(String, unique=True)
     password = Column(String)
+    activation_token = Column(String, nullable=True)
+    activated = Column(Boolean, default=False)
+    password_reset_token = Column(String, nullable=True, default=None)
     tracked_items = Column(Integer, default=0)
     items = relationship("ItemModel", back_populates="user", cascade="all,delete")
 

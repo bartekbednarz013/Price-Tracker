@@ -3,7 +3,7 @@ import './style.css';
 const HiddenInput = ({
   id,
   type,
-  inputName,
+  name,
   value,
   onChange,
   required,
@@ -12,7 +12,7 @@ const HiddenInput = ({
   <div id={id} className="hidden-input hidden">
     <input
       type={type}
-      name={inputName}
+      name={name}
       value={value}
       onChange={onChange}
       required={required}

@@ -105,7 +105,7 @@ const Settings = () => {
             <InputField
               type="password"
               id="password"
-              inputName="password"
+              name="password"
               onChange={onChange}
               value={state.password}
               placeholder="Enter new password"
@@ -115,7 +115,7 @@ const Settings = () => {
             <InputField
               type="password"
               id="password2"
-              inputName="password2"
+              name="password2"
               onChange={onChange}
               value={state.password2}
               placeholder="Confirm new password"

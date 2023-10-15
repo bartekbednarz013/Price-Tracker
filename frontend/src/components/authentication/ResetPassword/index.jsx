@@ -1,14 +1,21 @@
 import InputField from '../../common/form-fields/InputField';
 import SubmitField from '../../common/form-fields/SubmitField';
 import { useState } from 'react';
+import { useLazyResetPasswordQuery } from '../../../features/api/apiSlice';
 
 const ResetPassword = () => {
   const [email, setEmail] = useState('');
 
+  const [resetPasswordQuery] = useLazyResetPasswordQuery();
+
   const onChange = (e) => setEmail(e.target.value);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    const { isError } = await resetPasswordQuery(email);
+    if (!isError) {
+      setEmail('');
+    }
   };
 
   return (

@@ -57,13 +57,8 @@ export const apiSlice = createApi({
       }),
       onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
         try {
-          await queryFulfilled;
-          dispatch(
-            notificationShowed({
-              status: 201,
-              detail: 'Account created! You can sign in now!',
-            })
-          );
+          const { data } = await queryFulfilled;
+          dispatch(notificationShowed(data));
         } catch (error) {
           handleError(error, dispatch);
         }
@@ -110,13 +105,11 @@ export const apiSlice = createApi({
       },
     }),
     changePassword: builder.query({
-      query: (password) => {
-        return {
-          url: '/change-password',
-          method: 'POST',
-          body: { password: password },
-        };
-      },
+      query: (password) => ({
+        url: '/change-password',
+        method: 'POST',
+        body: { password: password },
+      }),
       onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
         try {
           await queryFulfilled;
@@ -126,6 +119,36 @@ export const apiSlice = createApi({
               detail: 'Password changed successfully.',
             })
           );
+        } catch (error) {
+          handleError(error, dispatch);
+        }
+      },
+    }),
+    resetPassword: builder.query({
+      query: (email) => ({
+        url: '/reset-password',
+        method: 'POST',
+        body: { email: email },
+      }),
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(notificationShowed(data));
+        } catch (error) {
+          handleError(error, dispatch);
+        }
+      },
+    }),
+    setNewPassword: builder.query({
+      query: (token, password) => ({
+        url: '/set-new-password',
+        method: 'POST',
+        body: { token: token, password: password },
+      }),
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(notificationShowed(data));
         } catch (error) {
           handleError(error, dispatch);
         }
@@ -252,6 +275,8 @@ export const {
   useLazyLoginQuery,
   useLazyDeleteAccountQuery,
   useLazyChangePasswordQuery,
+  useLazyResetPasswordQuery,
+  useLazySetNewPasswordQuery,
   // useLazyGetItemsQuery,
   useLazyAddItemQuery,
   useLazyDeleteItemQuery,

@@ -65,24 +65,11 @@
   padding: 0;
 }
 
-.show-password {
-  display: flex;
-  align-items: center;
-  column-gap: 5px;
-  margin-top: 7px;
-  padding-bottom: 5px;
-}
-
-.show-password label,
 .delete-account-form label {
   font-size: 14px;
   line-height: 14px;
   font-weight: unset;
   margin-bottom: 0;
-}
-
-.login-form .show-password {
-  padding-bottom: 24px;
 }
 
 .delete-account-input {

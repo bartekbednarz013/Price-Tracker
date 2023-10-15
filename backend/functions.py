@@ -3,7 +3,7 @@ from fastapi import HTTPException, status
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 
-from settings import ACCESS_TOKEN_EXPIRE, JWT_ALGORITHM, SECRET_KEY
+from settings import ACCESS_TOKEN_EXPIRE, JWT_ALGORITHM, SECRET_KEY, FRONTEND_HOSTNAME, BACKEND_HOSTNAME
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -38,3 +38,13 @@ def create_access_token(username: str):
     to_encode = {"sub": username, "exp": expire}
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=JWT_ALGORITHM)
     return encoded_jwt
+
+
+def get_activation_email_template(token: str):
+    return (
+        f'Activate your account by clicking the <a href="{BACKEND_HOSTNAME}/activate-account?token={token}">link</a>.'
+    )
+
+
+def get_password_reset_email_template(token: str):
+    return f'Click the <a href="{FRONTEND_HOSTNAME}/auth/set-new-password/{token}">link</a>, to set new password.'

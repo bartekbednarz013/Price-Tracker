@@ -3,17 +3,16 @@
   align-items: center;
   column-gap: 5px;
   margin-top: 7px;
-  padding-bottom: 5px;
+  padding-bottom: 24px;
 }
 
-.show-password label,
-.delete-account-form label {
+.show-password label {
   font-size: 14px;
   line-height: 14px;
   font-weight: unset;
   margin-bottom: 0;
 }
 
-.register-form .show-password {
-  padding-bottom: 24px;
+.field-before-show-password {
+  padding-bottom: 12px;
 }

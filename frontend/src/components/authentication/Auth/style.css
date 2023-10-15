@@ -8,7 +8,8 @@
 
 .login-wrapper,
 .register-wrapper,
-.reset-password-wrapper {
+.reset-password-wrapper,
+.set-new-password-wrapper {
   width: 100%;
   padding: 48px;
   background: var(--category-background-color);
@@ -28,10 +29,6 @@
   font-weight: 600;
   display: block;
   margin-bottom: 10px;
-}
-
-.field-before-show-password {
-  padding-bottom: 12px;
 }
 
 .login-register-redirect {

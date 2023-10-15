@@ -3,7 +3,7 @@ import '../style.css';
 const InputField = ({
   label,
   type,
-  inputName,
+  name,
   value,
   checked,
   placeholder,
@@ -17,11 +17,11 @@ const InputField = ({
   maxLength,
 }) => (
   <div className={'form-field ' + (additionalClassName ?? '')}>
-    {label && <label htmlFor={inputName}>{label}</label>}
+    {label && <label htmlFor={name}>{label}</label>}
     <input
       type={type}
-      id={inputName}
-      name={inputName}
+      id={name}
+      name={name}
       value={value}
       checked={checked}
       placeholder={placeholder}

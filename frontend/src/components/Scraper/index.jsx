@@ -123,7 +123,7 @@ const Scraper = () => {
         <form onSubmit={onScrap}>
           <InputField
             type="text"
-            inputName="inputUrl"
+            name="inputUrl"
             value={state.inputUrl}
             onChange={onChange}
             required={true}

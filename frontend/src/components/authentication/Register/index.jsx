@@ -1,4 +1,3 @@
-import './style.css';
 import InputField from '../../common/form-fields/InputField';
 import SubmitField from '../../common/form-fields/SubmitField';
 import { Link, useNavigate } from 'react-router-dom';
@@ -20,8 +19,7 @@ const Register = () => {
 
   const [state, setState] = useState(initialValues);
 
-  const [register] = useLazyRegisterQuery();
-  // const [login] = useLazyLoginQuery();
+  const [registerQuery] = useLazyRegisterQuery();
 
   const navigate = useNavigate();
 
@@ -46,9 +44,8 @@ const Register = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
     if (state.password === state.password2) {
-      const { isError } = await register(state);
+      const { isError } = await registerQuery(state);
       if (!isError) {
         navigate('/auth/login');
       }
@@ -63,7 +60,7 @@ const Register = () => {
           <InputField
             label="Username"
             type="text"
-            inputName="username"
+            name="username"
             onChange={onChange}
             value={state.username}
             required={true}
@@ -71,7 +68,7 @@ const Register = () => {
           <InputField
             label="Email"
             type="email"
-            inputName="email"
+            name="email"
             onChange={onChange}
             value={state.email}
             required={true}
@@ -79,7 +76,7 @@ const Register = () => {
           <InputField
             label="Password"
             type="password"
-            inputName="password"
+            name="password"
             onChange={onChange}
             value={state.password}
             required={true}
@@ -88,7 +85,7 @@ const Register = () => {
           <InputField
             label="Confirm password"
             type="password"
-            inputName="password2"
+            name="password2"
             onChange={onChange}
             value={state.password2}
             required={true}
