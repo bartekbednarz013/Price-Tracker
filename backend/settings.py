@@ -9,5 +9,9 @@ SECRET_KEY = config("SECRET_KEY")
 
 MAX_TRACKED_ITEMS = 5
 
-GMAIL_ADDRESS = "mypricetracker2023@gmail.com"
+# time of scheduled price updates
+U_HOUR = 16
+U_MINUTE = 45
+
+GMAIL_ADDRESS = config("GMAIL_ADDRESS")
 GMAIL_APP_PASSWORD = config("GMAIL_APP_PASSWORD")

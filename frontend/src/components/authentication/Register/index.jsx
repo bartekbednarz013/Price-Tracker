@@ -6,8 +6,9 @@ import {
   useLazyRegisterQuery,
   // useLazyLoginQuery,
 } from '../../../features/api/apiSlice';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import ShowPassword from '../../common/form-fields/ShowPassword';
+import { notificationShowed } from '../../../features/notifications/notificationsSlice';
 
 const Register = () => {
   const initialValues = {
@@ -20,6 +21,8 @@ const Register = () => {
   const [state, setState] = useState(initialValues);
 
   const [registerQuery] = useLazyRegisterQuery();
+
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -49,6 +52,13 @@ const Register = () => {
       if (!isError) {
         navigate('/auth/login');
       }
+    } else {
+      dispatch(
+        notificationShowed({
+          type: 'error',
+          detail: 'Both password must be matched!',
+        })
+      );
     }
   };
 

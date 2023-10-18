@@ -48,3 +48,7 @@ def get_activation_email_template(token: str):
 
 def get_password_reset_email_template(token: str):
     return f'Click the <a href="{FRONTEND_HOSTNAME}/auth/set-new-password/{token}">link</a>, to set new password.'
+
+
+def get_expected_price_reached_notification_template(name: str, url: str):
+    return f'Your item: <a href="{url}">{name}</a> reached expected price.'

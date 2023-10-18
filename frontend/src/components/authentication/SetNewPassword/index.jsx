@@ -4,6 +4,8 @@ import SubmitField from '../../common/form-fields/SubmitField';
 import ShowPassword from '../../common/form-fields/ShowPassword';
 import { useLazySetNewPasswordQuery } from '../../../features/api/apiSlice';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { notificationShowed } from '../../../features/notifications/notificationsSlice';
 
 const SetNewPassword = () => {
   const initialValues = {
@@ -14,6 +16,8 @@ const SetNewPassword = () => {
   const [state, setState] = useState(initialValues);
 
   const [setNewPasswordQuery] = useLazySetNewPasswordQuery();
+
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -43,6 +47,13 @@ const SetNewPassword = () => {
       if (!isError) {
         navigate('/auth/login');
       }
+    } else {
+      dispatch(
+        notificationShowed({
+          type: 'error',
+          detail: 'Both password must be matched!',
+        })
+      );
     }
   };
 

@@ -28,15 +28,20 @@ def get_scraper(url: HttpUrl):
 
 
 async def mango(url: HttpUrl, price_only: bool = False) -> ScraperOutputSchema | ScraperPriceOutputSchema:
-    driver = get_headless_driver(url)
-    price = float(driver.find_element(By.XPATH, '//meta[@itemprop="price"]').get_attribute("content"))
-    result = {"price": price}
-    if not price_only:
-        item_name = str(driver.find_element(By.XPATH, '//h1[@itemprop="name"]').get_attribute("innerHTML"))
-        currency = driver.find_element(By.XPATH, '//meta[@itemprop="priceCurrency"]').get_attribute("content")
-        result.update({"name": item_name, "shop": "Mango", "currency": currency})
-    driver.close()
-    return result
+    for i in range(2):
+        try:
+            driver = get_headless_driver(url)
+            price = float(driver.find_element(By.XPATH, '//meta[@itemprop="price"]').get_attribute("content"))
+            result = {"price": price}
+            if not price_only:
+                item_name = str(driver.find_element(By.XPATH, '//h1[@itemprop="name"]').get_attribute("innerHTML"))
+                currency = driver.find_element(By.XPATH, '//meta[@itemprop="priceCurrency"]').get_attribute("content")
+                result.update({"name": item_name, "shop": "Mango", "currency": currency})
+            driver.close()
+        except:
+            pass
+        if result:
+            return result
 
 
 async def zara(url: HttpUrl, price_only: bool = False) -> ScraperOutputSchema | ScraperPriceOutputSchema:

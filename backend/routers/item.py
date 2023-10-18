@@ -13,7 +13,7 @@ from crud.item import (
     update_expected_price,
     update_tracking_status,
     read_all_user_items,
-    check_if_already_exist
+    check_if_already_exist,
 )
 from crud.user import increase_user_tracked_items, decrease_user_tracked_items
 from scraping.scrapers import get_scraper
@@ -102,7 +102,6 @@ async def check_and_update_price(
         return item
     except:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Problem with scraper occured. Try again.")
-    
 
 
 @router.post("/{item_id}/expected-price", response_model=ItemSchema)
@@ -140,6 +139,6 @@ async def edit_tracking_status(
     item = await update_tracking_status(db, item_id, tracked)
     if tracked:
         await increase_user_tracked_items(db, current_user.id)
-    else: 
+    else:
         await decrease_user_tracked_items(db, current_user.id)
     return item

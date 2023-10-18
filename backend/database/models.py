@@ -2,6 +2,7 @@ from sqlalchemy import Column, ForeignKey, Integer, Float, String, DateTime, Boo
 from sqlalchemy_utils import EmailType, URLType
 from sqlalchemy.orm import relationship
 from .config import Base, engine
+from datetime import datetime
 
 
 class UserModel(Base):
@@ -11,8 +12,8 @@ class UserModel(Base):
     email = Column(EmailType, unique=True)
     username = Column(String, unique=True)
     password = Column(String)
-    activation_token = Column(String, nullable=True)
     activated = Column(Boolean, default=False)
+    activation_token = Column(String, nullable=True)
     password_reset_token = Column(String, nullable=True, default=None)
     tracked_items = Column(Integer, default=0)
     items = relationship("ItemModel", back_populates="user", cascade="all,delete")
@@ -31,6 +32,8 @@ class ItemModel(Base):
     expected_price = Column(Float, nullable=True)
     currency = Column(String)
     tracked = Column(Boolean)
+    added_at = Column(DateTime(timezone=True), default=datetime.now)
+    last_update = Column(DateTime(timezone=True), nullable=True, default=None, onupdate=datetime.now)
     user = relationship("UserModel", back_populates="items")
 
 

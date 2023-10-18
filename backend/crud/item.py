@@ -12,7 +12,7 @@ async def create_item(db: Session, user_id: int, item: ItemCreateSchema) -> Item
         price=item.price,
         expected_price=item.expected_price,
         currency=item.currency,
-        tracked=item.tracked
+        tracked=item.tracked,
     )
     db.add(item_instance)
     db.commit()
@@ -28,6 +28,10 @@ async def read_all_items(db: Session) -> list[ItemModel]:
     return db.query(ItemModel).all()
 
 
+async def read_all_tracked_items(db: Session) -> list[ItemModel]:
+    return db.query(ItemModel).filter(ItemModel.tracked == True).all()
+
+
 async def delete_item(db: Session, item_id: int) -> ItemModel:
     item = db.query(ItemModel).get(item_id)
     db.delete(item)
@@ -37,8 +41,8 @@ async def delete_item(db: Session, item_id: int) -> ItemModel:
 
 async def update_price(db: Session, item_id: int, new_price: float) -> ItemModel:
     item = db.query(ItemModel).get(item_id)
-    item.previous_price= item.price
-    item.price=new_price
+    item.previous_price = item.price
+    item.price = new_price
     db.commit()
     db.refresh(item)
     return item
@@ -63,5 +67,5 @@ async def read_all_user_items(db: Session, user_id: int) -> list[ItemModel]:
     return db.query(ItemModel).filter(ItemModel.user_id == user_id).all()
 
 
-async def check_if_already_exist(db: Session, url:str, user_id) -> ItemModel:
+async def check_if_already_exist(db: Session, url: str, user_id) -> ItemModel:
     return db.query(ItemModel).filter(ItemModel.url == url, ItemModel.user_id == user_id).first()

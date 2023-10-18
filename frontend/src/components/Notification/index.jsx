@@ -23,9 +23,10 @@ const Notification = () => {
   };
 
   const type =
-    199 < notification.status && notification.status < 300
+    (199 < notification.status && notification.status < 300) ||
+    notification.type === 'success'
       ? 'success-notification'
-      : 400 <= notification.status
+      : 400 <= notification.status || notification.type === 'error'
       ? 'error-notification'
       : '';
 

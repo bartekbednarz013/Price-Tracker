@@ -95,12 +95,12 @@
 .name-input-wrapper {
   display: none;
   width: 100%;
-  margin: 6px 0;
+  margin-bottom: -4px;
   padding-bottom: 0;
 }
 
 .name-input-wrapper input {
-  padding: 4px 8px;
+  padding: 0px 6px;
   min-height: unset;
 }
 
