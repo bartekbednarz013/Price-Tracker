@@ -14,7 +14,7 @@ const Notification = () => {
       setShow(true);
       setTimeout(() => {
         setShow(false);
-      }, 3000);
+      }, notification.duration ?? 3000);
     }
   }, [notifications]);
 

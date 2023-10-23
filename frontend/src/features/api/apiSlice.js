@@ -176,11 +176,12 @@ export const apiSlice = createApi({
       onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
         try {
           const { data } = await queryFulfilled;
-          dispatch(itemAdded(data));
+          dispatch(itemAdded(data.item));
           dispatch(
             notificationShowed({
               status: 201,
-              detail: 'Item successfully added to your list!',
+              detail: data.notification.detail,
+              duration: data.notification.duration,
             })
           );
         } catch (error) {

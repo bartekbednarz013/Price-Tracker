@@ -3,6 +3,7 @@ from sqlalchemy_utils import EmailType, URLType
 from sqlalchemy.orm import relationship
 from .config import Base, engine
 from datetime import datetime
+from settings import MAX_TRACKED_ITEMS
 
 
 class UserModel(Base):
@@ -16,6 +17,7 @@ class UserModel(Base):
     activation_token = Column(String, nullable=True)
     password_reset_token = Column(String, nullable=True, default=None)
     tracked_items = Column(Integer, default=0)
+    tracked_items_limit = Column(Integer, default=MAX_TRACKED_ITEMS)
     items = relationship("ItemModel", back_populates="user", cascade="all,delete")
 
 

@@ -6,7 +6,7 @@ class ItemCreateSchema(BaseModel):
     shop: str
     url: str
     price: float = Field(ge=0)
-    expected_price: float | None = Field(default=None, ge=0) 
+    expected_price: float | None = Field(default=None, ge=0)
     currency: str
     tracked: bool
 
@@ -25,3 +25,8 @@ class ItemSchema(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class AddItemResponseSchema(BaseModel):
+    notification: dict
+    item: ItemSchema

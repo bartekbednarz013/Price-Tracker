@@ -2,7 +2,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from dependencies import get_db, get_current_user
-from schemas.item import ItemSchema, ItemCreateSchema
+from schemas.item import ItemSchema, ItemCreateSchema, AddItemResponseSchema
 from database.models import UserModel
 from crud.item import (
     create_item,
@@ -21,7 +21,7 @@ from scraping.scrapers import get_scraper
 router = APIRouter(prefix="/items", tags=["items"])
 
 
-@router.post("", response_model=ItemSchema, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=AddItemResponseSchema, status_code=status.HTTP_201_CREATED)
 async def add_item(
     item: ItemCreateSchema,
     current_user: Annotated[UserModel, Depends(get_current_user)],
@@ -30,10 +30,15 @@ async def add_item(
     existing_item = await check_if_already_exist(db, item.url, current_user.id)
     if existing_item:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="You already have this item on your list.")
+    if item.tracked and current_user.tracked_items >= current_user.tracked_items_limit:
+        item.tracked = False
+        detail = "Item added to your list, but won't be tracked - you've already reached limit of tracked items."
+    else:
+        detail = "Item successfully added to your list!"
     created_item = await create_item(db, current_user.id, item)
     if created_item.tracked:
         await increase_user_tracked_items(db, current_user.id)
-    return created_item
+    return {"notification": {"detail": detail, "duration": 6000}, "item": created_item}
 
 
 @router.delete("/{item_id}", response_model=ItemSchema)

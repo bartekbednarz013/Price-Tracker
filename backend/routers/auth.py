@@ -45,7 +45,7 @@ async def register(new_user: UserCreateSchema, db: Annotated[Session, Depends(ge
         send_mail(user.email, "Price Tracker - Account activation", mail_content)
         return {
             "status_code": status.HTTP_201_CREATED,
-            "detail": "Account created! Now you have to activate your account. Check your email.",
+            "detail": "Account created!\nNow you have to activate your account. Check your email.",
         }
     except:
         raise HTTPException(status_code=500, detail="Mail server error occured. Please try again later.")
