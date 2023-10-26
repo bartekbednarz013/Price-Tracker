@@ -23,6 +23,7 @@ const Scraper = () => {
     expected_price: null,
     tracked: false,
     alreadyHaveThisItem: false,
+    fromStore: false,
   };
 
   const [state, setState] = useState(initialValues);
@@ -33,7 +34,11 @@ const Scraper = () => {
 
   useEffect(() => {
     if (scraper.name) {
-      setState({ ...state, ...scraper });
+      setState({ ...state, ...scraper, fromStore: true });
+
+      document
+        .getElementById('url-input-wrapper')
+        .classList.add('with-scrapped-data');
     }
   }, []);
 
@@ -52,18 +57,16 @@ const Scraper = () => {
     setState({ ...state, [e.target.name]: e.target.checked });
 
   const showNameInput = () => {
-    document.getElementById('name-span').style.display = 'none';
-    document.getElementById('edit-name-icon').style.display = 'none';
-    const nameInputWrapper = document.getElementById('name-input-wrapper');
-    nameInputWrapper.style.display = 'block';
+    document.getElementById('name-wrapper').style.zIndex = '-1';
+    document.getElementById('name-wrapper').style.opacity = '0';
+    document.getElementById('name-input-wrapper').style.display = 'block';
     document.getElementById('name-input').focus();
   };
 
   const hideNameInput = () => {
-    document.getElementById('name-span').style.display = 'initial';
-    document.getElementById('edit-name-icon').style.display = 'initial';
-    const nameInputWrapper = document.getElementById('name-input-wrapper');
-    nameInputWrapper.style.display = 'none';
+    document.getElementById('name-wrapper').style.zIndex = 'initial';
+    document.getElementById('name-wrapper').style.opacity = 'initial';
+    document.getElementById('name-input-wrapper').style.display = 'none';
   };
 
   const openItemPage = () => {
@@ -79,9 +82,19 @@ const Scraper = () => {
 
     const myItem = items.find((x) => x.url === state.inputUrl);
     if (myItem) {
-      setState({ ...state, alreadyHaveThisItem: true, name: '' });
+      setState({
+        ...state,
+        alreadyHaveThisItem: true,
+        name: '',
+        fromStore: false,
+      });
     } else {
-      setState({ ...state, alreadyHaveThisItem: false, name: '' });
+      setState({
+        ...state,
+        alreadyHaveThisItem: false,
+        name: '',
+        fromStore: false,
+      });
       scrapItem();
     }
   };
@@ -95,6 +108,9 @@ const Scraper = () => {
         alreadyHaveThisItem: false,
         ...item,
       });
+      document
+        .getElementById('url-input-wrapper')
+        .classList.add('with-scrapped-data');
     }
   };
 
@@ -113,12 +129,15 @@ const Scraper = () => {
     const { isError } = await addItemQuery(data);
     if (!isError) {
       setState(initialValues);
+      document
+        .getElementById('url-input-wrapper')
+        .classList.remove('with-scrapped-data');
     }
   };
 
   return (
     <Fragment>
-      <div className="url-input-wrapper">
+      <div id="url-input-wrapper" className="url-input-wrapper">
         <div className="url-input-header">Paste url to your item</div>
         <form onSubmit={onScrap}>
           <InputField
@@ -138,20 +157,28 @@ const Scraper = () => {
       </div>
       {isFetching && <div className="loading"></div>}
       {state.name && (
-        <div className="scrapped-data-wrapper">
+        <div
+          id="scrapped-data-wrapper"
+          className={
+            'scrapped-data-wrapper' +
+            (state.fromStore ? ' recovered-from-store' : ' fade-in')
+          }
+        >
           <div className="scrapped-data">
             <div className="item-data">
               <div className="sd-item sd-name">
                 <div className="sd-label">Name</div>
                 <div className="sd-value" id="sd-value-name">
-                  <span id="name-span" onClick={openItemPage}>
-                    {state.name}
+                  <span id="name-wrapper">
+                    <span id="name-span" onClick={openItemPage}>
+                      {state.name}
+                    </span>
+                    <EditIcon
+                      id="edit-name-icon"
+                      className="edit-name-icon"
+                      onClick={showNameInput}
+                    />
                   </span>
-                  <EditIcon
-                    id="edit-name-icon"
-                    className="edit-name-icon"
-                    onClick={showNameInput}
-                  />
                   <div
                     id="name-input-wrapper"
                     className="form-field name-input-wrapper"

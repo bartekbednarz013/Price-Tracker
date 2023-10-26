@@ -11,7 +11,7 @@ import Scraper from '../Scraper';
 
 const Content = () => {
   return (
-    <div className="content">
+    <div id="content" className="content">
       <Routes>
         <Route path="/" element={<Scraper />} />
         <Route path="auth" element={<Auth />}>

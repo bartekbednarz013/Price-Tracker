@@ -1,4 +1,4 @@
 .content {
   width: 100%;
-  padding: calc(var(--main-margin) * 4) 0;
+  padding: calc(var(--main-margin) * 4) 0 calc(var(--main-margin) * 2);
 }

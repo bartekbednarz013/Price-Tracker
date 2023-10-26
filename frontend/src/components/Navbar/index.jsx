@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
   return (
     <div className="navbar">
-      <div className="navbar-link"></div>
+      <div className="navbar-link ghost-navbar-link"></div>
       <Link to="/">
         <div className="app-name">Price Tracker</div>
       </Link>

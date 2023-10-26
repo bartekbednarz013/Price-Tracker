@@ -103,7 +103,8 @@ async def check_and_update_price(
     try:
         result = await scraper(item.url, price_only=True)
         current_price = result["price"]
-        item = await update_price(db, item_id, current_price)
+        if item.price != current_price:
+            item = await update_price(db, item_id, current_price)
         return item
     except:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Problem with scraper occured. Try again.")
@@ -121,9 +122,8 @@ async def edit_expected_price(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
     if item.user_id is not current_user.id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Cannot edit other user's item")
-    if item.expected_price == expected_price:
-        return item
-    item = await update_expected_price(db, item_id, expected_price)
+    if item.expected_price != expected_price:
+        item = await update_expected_price(db, item_id, expected_price)
     return item
 
 
@@ -134,6 +134,11 @@ async def edit_tracking_status(
     current_user: Annotated[UserModel, Depends(get_current_user)],
     db: Annotated[Session, Depends(get_db)],
 ):
+    if tracked and current_user.tracked_items >= current_user.tracked_items_limit:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Cannot track this item - you've already reached limit of tracked items.",
+        )
     item = await read_item(db, item_id)
     if not item:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
