@@ -1,64 +1,36 @@
-.my-items {
-  width: 100%;
+:root {
+  --name-width: 370px;
+  --shop-width: 140px;
+  --price-width: 95px;
+  --expected-price-width: 125px;
+  --tracked-width: 80px;
+  --options-width: 100px;
 }
 
-.item-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+.my-items {
+  width: 100%;
 }
 
 .header-row {
   display: none;
 }
 
-.header-row .cell {
+.header-cell {
   font-weight: bold;
   height: 45px;
   line-height: 25px;
   vertical-align: baseline;
-}
-
-.item-row {
-  row-gap: 5px;
-  margin-bottom: 20px;
-  box-shadow: 0 3px 3px -3px rgba(0, 0, 0, 0.25);
-}
-
-.item-row:last-child {
-  margin-bottom: 0;
-  box-shadow: none;
-}
-
-.item-row .cell {
-  display: flex;
-  align-items: center;
-}
-
-.cell {
   text-align: center;
 }
 
-.header-row .name,
-.header-row .shop-cell,
-.shop-cell,
-.name-cell {
+.name-header-cell,
+.shop-header-cell {
   text-align: left;
 }
 
-.name-cell {
+.name-header-cell {
   min-width: 100%;
   max-width: 100%;
-}
-
-.shop-cell-wrapper {
-  min-width: 29%;
-  max-width: 29%;
-}
-
-.price-cell-wrapper {
-  min-width: 28%;
-  max-width: 28%;
 }
 
 /* tablets */
@@ -73,66 +45,43 @@
 
   .header-row {
     display: flex;
-  }
-
-  .header-row,
-  .item-row {
     flex-wrap: nowrap;
   }
 
-  .item-row {
-    row-gap: 0;
-    margin-bottom: 0;
+  .name-header-cell,
+  .shop-header-cell,
+  .price-header-cell,
+  .expected-price-header-cell {
+    margin-right: 30px;
   }
 
-  .item-row .cell {
-    height: 50px;
-    line-height: unset;
+  .name-header-cell {
+    min-width: var(--name-width);
+    max-width: var(--name-width);
   }
 
-  .name-cell {
-    min-width: 300px;
-    max-width: 300px;
+  .shop-header-cell {
+    min-width: var(--shop-width);
+    max-width: var(--shop-width);
   }
 
-  .shop-cell-wrapper {
-    min-width: unset;
-    max-width: unset;
+  .price-header-cell {
+    min-width: var(--price-width);
+    max-width: var(--price-width);
   }
 
-  .shop-cell {
-    min-width: 140px;
-    max-width: 140px;
+  .expected-price-header-cell {
+    min-width: var(--expected-price-width);
+    max-width: var(--expected-price-width);
   }
 
-  .price-cell-wrapper {
-    min-width: unset;
-    max-width: unset;
+  .tracked-header-cell {
+    min-width: var(--tracked-width);
+    max-width: var(--tracked-width);
   }
 
-  .price-cell {
-    min-width: 120px;
-    max-width: 120px;
-  }
-
-  .expected-price-cell {
-    min-width: 160px;
-    max-width: 160px;
-  }
-
-  .tracked-cell {
-    min-width: 80px;
-    max-width: 80px;
-  }
-
-  .options-cell {
-    min-width: 130px;
-    max-width: 130px;
-  }
-
-  .price-cell,
-  .expected-price-cell,
-  .tracked-cell {
-    justify-content: center;
+  .options-header-cell {
+    min-width: var(--options-width);
+    max-width: var(--options-width);
   }
 }

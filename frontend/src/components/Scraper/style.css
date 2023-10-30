@@ -285,10 +285,6 @@
 
 /* tablets */
 @media screen and (min-width: 600px) {
-}
-
-/* desktop */
-@media screen and (min-width: 960px) {
   .url-input-wrapper .form-field {
     width: calc(100% - 100px - var(---form-fields-gap));
   }
@@ -300,7 +296,10 @@
   .scrapped-data-wrapper {
     flex-wrap: nowrap;
   }
+}
 
+/* desktop */
+@media screen and (min-width: 960px) {
   .edit-name-icon {
     height: 13px;
     width: 13px;

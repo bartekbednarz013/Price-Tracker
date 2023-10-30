@@ -8,12 +8,14 @@ const MyItems = () => {
   return (
     <div className="my-items">
       <div className="header-row">
-        <div className="cell name-cell">Item</div>
-        <div className="cell shop-cell">Shop</div>
-        <div className="cell price-cell">Price</div>
-        <div className="cell expected-price-cell">Expected price</div>
-        <div className="cell tracked-cell">Tracked</div>
-        <div className="cell options-cell"></div>
+        <div className="header-cell name-header-cell">Item</div>
+        <div className="header-cell shop-header-cell">Shop</div>
+        <div className="header-cell price-header-cell">Price</div>
+        <div className="header-cell expected-price-header-cell">
+          Expected price
+        </div>
+        <div className="header-cell tracked-header-cell">Tracked</div>
+        <div className="header-cell options-header-cell"></div>
       </div>
       {items.map((item) => (
         <ItemRow item={item} key={item.id} />

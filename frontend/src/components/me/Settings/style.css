@@ -108,6 +108,9 @@
 
 /* tablets */
 @media screen and (min-width: 600px) {
+  .user-settings-field {
+    width: 50%;
+  }
 }
 
 /* desktop */
@@ -122,10 +125,6 @@
 
   .logout-link svg {
     height: 70%;
-  }
-
-  .user-settings-field {
-    width: 50%;
   }
 
   .user-settings-field .show-password {

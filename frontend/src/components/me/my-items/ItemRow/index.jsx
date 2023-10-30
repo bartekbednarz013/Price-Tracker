@@ -56,7 +56,6 @@ const ItemRow = ({ item }) => {
           <span onClick={openItemPage}>{item.name}</span>
         </div>
       </div>
-
       <div className="full-width-wrapper middle-wrapper">
         <div className="cell-wrapper shop-cell-wrapper">
           <div className="cell-title">Shop</div>
