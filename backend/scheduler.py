@@ -1,32 +1,35 @@
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from crud.item import read_all_tracked_items, update_price
-from crud.user import read_user_by_id
+from crud.item import update_price, get_urls_of_tracked_items
 from scraping.scrapers import get_scraper
 from database.config import SessionLocal
 from postman import send_mail
-from functions import get_expected_price_reached_notification_template
+from functions import get_expected_price_reached_notification_template, get_price_dropped_notification_template
 from settings import U_HOUR, U_MINUTE
 
 
 async def update_tracked_items():
     db = SessionLocal()
-    items = await read_all_tracked_items(db)
+    urls = await get_urls_of_tracked_items(db)
     db.close()
-    for item in items:
-        scraper = get_scraper(item.url)
+    for url in urls:
+        scraper = get_scraper(url)
         try:
-            result = await scraper(item.url, price_only=True)
+            result = await scraper(url, price_only=True)
         except:
             continue
-        current_price = result["price"]
-        if current_price != item.price:
+        new_price = result["price"]
+        for item in urls[url]["items"]:
+            if new_price == item["price"]:
+                continue
             db = SessionLocal()
-            await update_price(db, item.id, current_price)
-            if current_price <= item.expected_price:
-                user = read_user_by_id(db, item.user_id)
-                mail_content = get_expected_price_reached_notification_template(item.name, item.url)
-                send_mail(user.email, "Your item reached expected price!", mail_content)
+            await update_price(db, item["id"], new_price)
             db.close()
+            if not item["expected_price"] and new_price < item["price"]:
+                mail_content = get_price_dropped_notification_template(item["name"], url)
+                send_mail(item["user_email"], "Price of your item just dropped!", mail_content)
+            elif new_price <= item["expected_price"]:
+                mail_content = get_expected_price_reached_notification_template(item["name"], url)
+                send_mail(item["user_email"], "Your item reached expected price!", mail_content)
 
 
 scheduler = AsyncIOScheduler()

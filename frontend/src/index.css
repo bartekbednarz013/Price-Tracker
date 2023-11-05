@@ -71,8 +71,6 @@ body::-webkit-scrollbar {
 }
 
 .mini-loading {
-  /* height: 100%;
-  width: 100%; */
   height: 24px;
   width: 36px;
   background-size: 270%;
@@ -86,8 +84,8 @@ body::-webkit-scrollbar {
 /* desktop */
 @media screen and (min-width: 960px) {
   .mini-loading {
-    height: 100%;
-    width: 100%;
-    background-size: 75%;
+    height: 50px;
+    width: 50px;
+    background-size: 175%;
   }
 }

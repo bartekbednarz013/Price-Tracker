@@ -1,5 +1,7 @@
 import './style.css';
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { notificationShowed } from '../../../../features/notifications/notificationsSlice';
 import {
   useLazyDeleteItemQuery,
   useLazyEditExpectedPriceQuery,
@@ -22,6 +24,8 @@ const ItemRow = ({ item }) => {
   const [editExpectedPriceQuery] = useLazyEditExpectedPriceQuery();
   const [editTrackingStatusQuery] = useLazyEditTrackingStatusQuery();
 
+  const dispatch = useDispatch();
+
   const onChange = (e) =>
     setState({ ...state, [e.target.name]: e.target.value });
 
@@ -42,6 +46,14 @@ const ItemRow = ({ item }) => {
 
   const updatePrice = async () => {
     await updatePriceQuery(state.id);
+    if (item.price <= item.expected_price) {
+      dispatch(
+        notificationShowed({
+          type: 'success',
+          detail: `Your item <b>${item.name}</b> reached expected price!`,
+        })
+      );
+    }
   };
 
   const openItemPage = () => {
@@ -63,7 +75,14 @@ const ItemRow = ({ item }) => {
         </div>
         <div className="cell-wrapper price-cell-wrapper">
           <div className="cell-title">Price</div>
-          <div className="cell price-cell">
+          <div
+            className={
+              'cell price-cell' +
+              (item.price <= item.expected_price
+                ? ' expected-price-reached'
+                : '')
+            }
+          >
             {updateInProgress ? (
               <div className="mini-loading"></div>
             ) : (

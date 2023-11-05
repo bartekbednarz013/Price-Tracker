@@ -17,6 +17,7 @@ def get_headless_driver(url: str) -> webdriver:
     options.add_argument("--ignore-certificate-errors")
 
     driver = webdriver.Chrome(options=options)
+    driver.implicitly_wait(2)
     driver.get(url)
     return driver
 

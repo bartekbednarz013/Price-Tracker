@@ -69,3 +69,34 @@ async def read_all_user_items(db: Session, user_id: int) -> list[ItemModel]:
 
 async def check_if_already_exist(db: Session, url: str, user_id) -> ItemModel:
     return db.query(ItemModel).filter(ItemModel.url == url, ItemModel.user_id == user_id).first()
+
+
+async def get_urls_of_tracked_items(db: Session):
+    items = db.query(ItemModel).filter(ItemModel.tracked == True).all()
+    urls = {}
+    for item in items:
+        if item.url in urls:
+            urls[item.url]["items"].append(
+                {
+                    "id": item.id,
+                    "name": item.name,
+                    "price": item.price,
+                    "expected_price": item.expected_price,
+                    "user_id": item.user_id,
+                    "user_email": item.user.email,
+                }
+            )
+        else:
+            urls[item.url] = {
+                "items": [
+                    {
+                        "id": item.id,
+                        "name": item.name,
+                        "price": item.price,
+                        "expected_price": item.expected_price,
+                        "user_id": item.user_id,
+                        "user_email": item.user.email,
+                    }
+                ]
+            }
+    return urls

@@ -52,3 +52,7 @@ def get_password_reset_email_template(token: str):
 
 def get_expected_price_reached_notification_template(name: str, url: str):
     return f'Your item: <a href="{url}">{name}</a> reached expected price.'
+
+
+def get_price_dropped_notification_template(name: str, url: str):
+    return f'Price of your item: <a href="{url}">{name}</a> just dropped.'

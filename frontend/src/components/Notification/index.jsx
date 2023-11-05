@@ -35,7 +35,10 @@ const Notification = () => {
       <div className={'notification ' + type}>
         <div className="notification-content">
           {/* <div className="notification-header"></div> */}
-          <div className="notification-detail">{notification.detail}</div>
+          <div
+            className="notification-detail"
+            dangerouslySetInnerHTML={{ __html: notification.detail }}
+          />
         </div>
         <div className="notification-options">
           <div className="dismiss-notification" onClick={closeNotification}>

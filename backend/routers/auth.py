@@ -42,7 +42,7 @@ async def register(new_user: UserCreateSchema, db: Annotated[Session, Depends(ge
         raise HTTPException(status_code=500, detail="Server error occured. Please try again later.")
     try:
         mail_content = get_activation_email_template(user.activation_token)
-        send_mail(user.email, "Price Tracker - Account activation", mail_content)
+        send_mail(user.email, "Activate your account", mail_content)
         return {
             "status_code": status.HTTP_201_CREATED,
             "detail": "Account created!\nNow you have to activate your account. Check your email.",
@@ -114,7 +114,7 @@ async def reset_password(email: ResetPasswordSchema, db: Annotated[Session, Depe
         try:
             password_reset_token = create_password_reset_token(db, user.id)
             mail_content = get_password_reset_email_template(password_reset_token)
-            send_mail(email.email, "Price Tracker - Set new password", mail_content)
+            send_mail(email.email, "Set new password", mail_content)
         except:
             raise HTTPException(status_code=500, detail="Mail server error occured. Please try again later.")
     return {

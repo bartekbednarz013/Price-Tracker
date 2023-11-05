@@ -126,6 +126,9 @@ const Scraper = () => {
       return;
     }
     const { inputUrl, ...data } = state;
+    if (data.expected_price === '') {
+      data.expected_price = null;
+    }
     const { isError } = await addItemQuery(data);
     if (!isError) {
       setState(initialValues);
