@@ -205,7 +205,7 @@ const Scraper = () => {
               <div className="sd-item sd-price">
                 <div className="sd-label">Price</div>
                 <div className="sd-value">
-                  {state.price} {state.currency}
+                  {state.price.toFixed(2)} {state.currency}
                 </div>
               </div>
             </div>

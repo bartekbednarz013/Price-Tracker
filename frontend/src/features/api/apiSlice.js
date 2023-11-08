@@ -24,9 +24,11 @@ const handleError = (error, dispatch) => {
     status,
     data: { detail },
   } = error.error;
-  // zmienic wiadomosc przy 422, bo ta nic nie sugeruje
   if (status === 422) {
     detail = detail[0].msg;
+  }
+  if (detail === 'Could not validate credentials') {
+    dispatch(userLoggedOut())
   }
   dispatch(
     notificationShowed({

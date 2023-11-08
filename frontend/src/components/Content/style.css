@@ -1,4 +1,11 @@
 .content {
   width: 100%;
-  padding: calc(var(--main-margin) * 4) 0 calc(var(--main-margin) * 2);
+  padding: calc(var(--main-margin) * 4) 0 calc(var(--main-margin) * 1.5);
+}
+
+/* tablets */
+@media screen and (min-width: 600px) {
+  .content{
+    padding: calc(var(--main-margin) * 4) 0 calc(var(--main-margin) * 4);
+  }
 }

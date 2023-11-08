@@ -32,3 +32,8 @@ def get_soup(url: str) -> BeautifulSoup:
     res = requests.get(url)
     soup = BeautifulSoup(res.content, "html.parser")
     return soup
+
+
+def get_response_content(url: str) -> requests.Response.content:
+    res = requests.get(url)
+    return res.content

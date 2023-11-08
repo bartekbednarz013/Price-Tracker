@@ -56,7 +56,8 @@ const ItemRow = ({ item }) => {
     }
   };
 
-  const openItemPage = () => {
+  const openItemPage = (e) => {
+    e.preventDefault();
     window.open(item.url);
   };
 
@@ -65,7 +66,7 @@ const ItemRow = ({ item }) => {
       <div className="cell-wrapper">
         <div className="cell-title">Item</div>
         <div className="cell name-cell">
-          <span onClick={openItemPage}>{item.name}</span>
+          <a href={item.url} onClick={openItemPage}>{item.name}</a>
         </div>
       </div>
       <div className="full-width-wrapper middle-wrapper">
@@ -87,7 +88,7 @@ const ItemRow = ({ item }) => {
               <div className="mini-loading"></div>
             ) : (
               <span>
-                {item.price} {item.currency}
+                {item.price.toFixed(2)} {item.currency}
               </span>
             )}
           </div>
@@ -122,10 +123,10 @@ const ItemRow = ({ item }) => {
         </div>
         <div className="cell options-cell">
           <div className="cell-content-flex-wrapper">
-            <RefreshIcon className="icon" onClick={updatePrice} />
+            <RefreshIcon className="icon" onClick={updatePrice} title="Refresh price" />
           </div>
           <div className="cell-content-flex-wrapper">
-            <BinIcon className="icon" onClick={deleteItem} />
+            <BinIcon className="icon" onClick={deleteItem} title="Delete item" />
           </div>
         </div>
       </div>
