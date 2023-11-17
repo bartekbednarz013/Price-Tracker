@@ -1,7 +1,7 @@
 import './style.css';
 
-const Button = ({ value, onClick }) => (
-  <button className="button" onClick={onClick}>
+const Button = ({ value, onClick, disabled}) => (
+  <button className="button" onClick={onClick} disabled={disabled}>
     {value}
   </button>
 );

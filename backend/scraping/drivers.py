@@ -1,6 +1,7 @@
 from selenium import webdriver
 import requests
 from bs4 import BeautifulSoup
+from lxml import etree
 
 
 def get_headless_driver(url: str) -> webdriver:
@@ -34,6 +35,6 @@ def get_soup(url: str) -> BeautifulSoup:
     return soup
 
 
-def get_response_content(url: str) -> requests.Response.content:
+def get_etree(url: str):
     res = requests.get(url)
-    return res.content
+    return etree.HTML(res.content)

@@ -34,7 +34,7 @@
 }
 
 .user-settings-field .show-password {
-  padding-bottom: 6px;
+  padding: 6px 0;
 }
 
 .last-user-settings-field {
@@ -45,6 +45,10 @@
 .user-settings-field h3 {
   font-size: 14px;
   font-weight: 600;
+}
+
+.user-settings-field .checkbox-toggle {
+  margin-top: 5px;
 }
 
 .show-change-password-button,
@@ -125,9 +129,5 @@
 
   .logout-link svg {
     height: 70%;
-  }
-
-  .user-settings-field .show-password {
-    padding-bottom: 24px;
   }
 }

@@ -11,6 +11,7 @@ import InputField from '../common/form-fields/InputField';
 import SubmitField from '../common/form-fields/SubmitField';
 import Button from '../common/Button';
 import { ReactComponent as EditIcon } from '../../svg/edit.svg';
+import CheckboxToggle from '../common/CheckboxToggle';
 
 const Scraper = () => {
   const initialValues = {
@@ -213,16 +214,12 @@ const Scraper = () => {
           <div className="item-options">
             <div className="option-field">
               <div className="option-title">Tracked:</div>
-              <label className="checkbox-toggle">
-                <input
-                  type="checkbox"
-                  id="tracked-checkbox"
-                  name="tracked"
-                  checked={state.tracked}
-                  onChange={onCheckboxChange}
-                />
-                <span className="slider round"></span>
-              </label>
+              <CheckboxToggle
+                id="tracked-checkbox"
+                name="tracked"
+                checked={state.tracked}
+                onChange={onCheckboxChange}
+              />
             </div>
             <div className="option-field">
               <div className="option-title">Expected price:</div>
@@ -238,7 +235,11 @@ const Scraper = () => {
             </div>
           </div>
           <div className="sd-options">
-            <Button value="Add item to my list" onClick={addItemToMyList} />
+            <Button
+              value="Add item to my list"
+              onClick={addItemToMyList}
+              disabled={!isAuthenticated}
+            />
           </div>
         </div>
       )}

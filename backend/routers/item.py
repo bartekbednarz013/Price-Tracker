@@ -38,7 +38,10 @@ async def add_item(
     created_item = await create_item(db, current_user.id, item)
     if created_item.tracked:
         await increase_user_tracked_items(db, current_user.id)
-    return {"notification": {"detail": detail, "duration": 6000}, "item": created_item}
+    return {
+        "notification": {"status_code": status.HTTP_201_CREATED, "detail": detail, "duration": 6000},
+        "item": created_item,
+    }
 
 
 @router.delete("/{item_id}", response_model=ItemSchema)

@@ -12,6 +12,7 @@ class UserSchema(BaseModel):
     id: int
     username: str
     email: EmailStr
+    email_notifications: bool
     items: list[ItemSchema] = []
 
     class Config:
@@ -24,3 +25,7 @@ class MinUserSchema(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class ChangeEmailNotificationsSchema(BaseModel):
+    email_notifications: bool

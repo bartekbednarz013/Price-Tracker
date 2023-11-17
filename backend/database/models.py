@@ -18,6 +18,7 @@ class UserModel(Base):
     password_reset_token = Column(String, nullable=True, default=None)
     tracked_items = Column(Integer, default=0)
     tracked_items_limit = Column(Integer, default=MAX_TRACKED_ITEMS)
+    email_notifications = Column(Boolean, default=True)
     items = relationship("ItemModel", back_populates="user", cascade="all,delete")
 
 

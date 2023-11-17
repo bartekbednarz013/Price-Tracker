@@ -19,6 +19,9 @@ const authSlice = createSlice({
     userLoggedOut() {
       return initialState;
     },
+    userChangedMailingStatus(state, action) {
+      state.user.email_notifications = action.payload;
+    },
   },
   // extraReducers: (builder) => {
   //   builder.addCase(PURGE, () => {
@@ -27,6 +30,7 @@ const authSlice = createSlice({
   // },
 });
 
-export const { userLoggedIn, userLoggedOut } = authSlice.actions;
+export const { userLoggedIn, userLoggedOut, userChangedMailingStatus } =
+  authSlice.actions;
 
 export default authSlice.reducer;

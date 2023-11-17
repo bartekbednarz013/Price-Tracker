@@ -1,5 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { userLoggedIn, userLoggedOut } from '../auth/authSlice';
+import {
+  userLoggedIn,
+  userLoggedOut,
+  userChangedMailingStatus,
+} from '../auth/authSlice';
 import {
   itemsFetched,
   itemAdded,
@@ -28,7 +32,7 @@ const handleError = (error, dispatch) => {
     detail = detail[0].msg;
   }
   if (detail === 'Could not validate credentials') {
-    dispatch(userLoggedOut())
+    dispatch(userLoggedOut());
   }
   dispatch(
     notificationShowed({
@@ -114,13 +118,8 @@ export const apiSlice = createApi({
       }),
       onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
         try {
-          await queryFulfilled;
-          dispatch(
-            notificationShowed({
-              status: 204,
-              detail: 'Password changed successfully.',
-            })
-          );
+          const { data } = await queryFulfilled;
+          dispatch(notificationShowed(data));
         } catch (error) {
           handleError(error, dispatch);
         }
@@ -156,6 +155,24 @@ export const apiSlice = createApi({
         }
       },
     }),
+    changeMailingStatus: builder.query({
+      query: (emailNotifications) => ({
+        url: '/email-notifications',
+        method: 'POST',
+        body: { email_notifications: emailNotifications },
+      }),
+      onQueryStarted: async (
+        emailNotifications,
+        { dispatch, queryFulfilled }
+      ) => {
+        try {
+          await queryFulfilled;
+          dispatch(userChangedMailingStatus(emailNotifications));
+        } catch (error) {
+          handleError(error, dispatch);
+        }
+      },
+    }),
     // getItems: builder.query({
     //   query: () => '/items',
     //   onQueryStarted: async (body, { dispatch, queryFulfilled }) => {
@@ -179,13 +196,7 @@ export const apiSlice = createApi({
         try {
           const { data } = await queryFulfilled;
           dispatch(itemAdded(data.item));
-          dispatch(
-            notificationShowed({
-              status: 201,
-              detail: data.notification.detail,
-              duration: data.notification.duration,
-            })
-          );
+          dispatch(notificationShowed(data.notification));
         } catch (error) {
           handleError(error, dispatch);
         }
@@ -280,6 +291,7 @@ export const {
   useLazyChangePasswordQuery,
   useLazyResetPasswordQuery,
   useLazySetNewPasswordQuery,
+  useLazyChangeMailingStatusQuery,
   // useLazyGetItemsQuery,
   useLazyAddItemQuery,
   useLazyDeleteItemQuery,

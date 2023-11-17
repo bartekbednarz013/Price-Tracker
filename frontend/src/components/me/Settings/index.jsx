@@ -7,26 +7,33 @@ import { userLoggedOut } from '../../../features/auth/authSlice';
 import {
   useLazyDeleteAccountQuery,
   useLazyChangePasswordQuery,
+  useLazyChangeMailingStatusQuery,
 } from '../../../features/api/apiSlice';
 import { apiSlice } from '../../../features/api/apiSlice';
+import { notificationShowed } from '../../../features/notifications/notificationsSlice';
 import InputField from '../../common/form-fields/InputField';
 import SubmitField from '../../common/form-fields/SubmitField';
 import ShowPassword from '../../common/form-fields/ShowPassword';
+import CheckboxToggle from '../../common/CheckboxToggle';
 
 const Settings = () => {
+  const { username, email, email_notifications } = useSelector(
+    (state) => state.auth.user
+  );
+
   const initialValues = {
     password: '',
     password2: '',
+    emailNotification: email_notifications,
   };
 
   const [state, setState] = useState(initialValues);
-
-  const { username, email } = useSelector((state) => state.auth.user);
 
   const dispatch = useDispatch();
 
   const [deleteAccountQuery] = useLazyDeleteAccountQuery();
   const [changePasswordQuery] = useLazyChangePasswordQuery();
+  const [changeMailingStatusQuery] = useLazyChangeMailingStatusQuery();
 
   const openPasswordChanger = () => {
     document.querySelector('.show-change-password-button').style.display =
@@ -35,8 +42,22 @@ const Settings = () => {
     document.getElementById('password').focus();
   };
 
+  const closePasswordChanger = () => {
+    document.querySelector('.show-change-password-button').style.display =
+      'initial';
+    document.querySelector('.change-password-form').style.display = 'none';
+  };
+
   const onChange = (e) =>
     setState({ ...state, [e.target.name]: e.target.value });
+
+  const changeMailingStatus = async () => {
+    const { isError } = await changeMailingStatusQuery(
+      !state.emailNotification
+    );
+    if (!isError)
+      setState({ ...state, emailNotification: !state.emailNotification });
+  };
 
   const showPassword = () => {
     const showPasswordCheckbox = document.getElementById('showPassword');
@@ -53,7 +74,15 @@ const Settings = () => {
     e.preventDefault();
     if (state.password === state.password2) {
       const { isError } = await changePasswordQuery(state.password);
-      if (!isError) setState(initialValues);
+      if (!isError) setState({ ...state, password: '', password2: '' });
+      closePasswordChanger();
+    } else {
+      dispatch(
+        notificationShowed({
+          type: 'error',
+          detail: 'Both password must be matched!',
+        })
+      );
     }
   };
 
@@ -91,6 +120,16 @@ const Settings = () => {
         <div className="user-info-field">
           <h3>Email</h3>
           <p>{email}</p>
+        </div>
+
+        <div className="user-settings-field">
+          <h3>Email notifications</h3>
+          <CheckboxToggle
+            id="email-notification-checkbox"
+            name="emailNotification"
+            checked={state.emailNotification}
+            onChange={changeMailingStatus}
+          />
         </div>
 
         <div className="user-settings-field">

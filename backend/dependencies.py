@@ -19,9 +19,9 @@ def get_db():
         db.close()
 
 
-def get_current_user(db: Annotated[Session, Depends(get_db)], token: Annotated[str, Depends(oauth2)]) -> UserModel:
+async def get_current_user(db: Annotated[Session, Depends(get_db)], token: Annotated[str, Depends(oauth2)]) -> UserModel:
     username = decode_username_from_token(token)
-    user = read_user_by_username(db, username=username)
+    user = await read_user_by_username(db, username=username)
     if user is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

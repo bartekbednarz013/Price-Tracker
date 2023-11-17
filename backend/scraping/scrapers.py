@@ -1,8 +1,7 @@
 from selenium.webdriver.common.by import By
 from pydantic import HttpUrl
-from .drivers import get_driver, get_headless_driver, get_soup, get_response_content
+from .drivers import get_driver, get_headless_driver, get_soup, get_etree
 from schemas.scraper import ScraperOutputSchema, ScraperPriceOutputSchema
-from lxml import etree
 
 
 class MyList(list):
@@ -41,6 +40,8 @@ def get_scraper(url: HttpUrl):
             return massimo_dutti
         case "skims":
             return skims
+        case "alohas":
+            return alohas
         case _:
             return None
 
@@ -173,8 +174,7 @@ async def factcool(url: HttpUrl, price_only: bool = False) -> ScraperOutputSchem
 
 
 async def bossino(url: HttpUrl, price_only: bool = False) -> ScraperOutputSchema | ScraperPriceOutputSchema:
-    content = get_response_content(url)
-    dom = etree.HTML(content)
+    dom = get_etree(url)
     price_string = dom.xpath("//span[@data-product-price]//span[@class='visually-hidden']")[0].text
     price = float(price_string[:-3].replace(",", "."))
     result = {"price": price}
@@ -202,8 +202,7 @@ async def triples(url: HttpUrl, price_only: bool = False) -> ScraperOutputSchema
 
 
 async def hibou(url: HttpUrl, price_only: bool = False) -> ScraperOutputSchema | ScraperPriceOutputSchema:
-    content = get_response_content(url)
-    dom = etree.HTML(content)
+    dom = get_etree(url)
     price_string = dom.xpath("//strong[@id='projector_price_value']//span")[0].text
     price = float(price_string[:-3].replace(",", "."))
     result = {"price": price}
@@ -215,8 +214,7 @@ async def hibou(url: HttpUrl, price_only: bool = False) -> ScraperOutputSchema |
 
 
 async def marsala(url: HttpUrl, price_only: bool = False) -> ScraperOutputSchema | ScraperPriceOutputSchema:
-    content = get_response_content(url)
-    dom = etree.HTML(content)
+    dom = get_etree(url)
     price = float(
         dom.xpath("//div[@class='price-container']//div[@class='final-price inline-block']//meta[@itemprop='price']")[
             0
@@ -288,4 +286,16 @@ async def skims(url: HttpUrl, price_only: bool = False) -> ScraperOutputSchema |
         currency = "USD"
         result.update({"name": item_name, "shop": "SKIMS", "currency": currency})
     driver.close()
+    return result
+
+
+async def alohas(url: HttpUrl, price_only: bool = False) -> ScraperOutputSchema | ScraperPriceOutputSchema:
+    dom = get_etree(url)
+    price_string = dom.xpath("//div[@class='grid product__page']//span[@data-product-price='']")[0].text
+    price = float(price_string.strip().replace(",", ".")[3:])
+    result = {"price": price}
+    if not price_only:
+        item_name = dom.xpath("//div[@class='grid product__page']//h1[@class='product__title']")[0].text.strip()
+        currency = "EUR"
+        result.update({"name": item_name, "shop": "ALOHAS", "currency": currency})
     return result
