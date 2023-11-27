@@ -48,7 +48,7 @@ async def register(new_user: UserCreateSchema, db: Annotated[Session, Depends(ge
         mail_content = get_activation_email_template(user.activation_token)
         send_mail(user.email, "Activate your account", mail_content)
         return {
-            "status_code": status.HTTP_201_CREATED,
+            "status": status.HTTP_201_CREATED,
             "detail": "Account created!\nNow you have to activate your account. Check your mailbox.",
         }
     except:
@@ -103,7 +103,7 @@ async def change_password(
     try:
         await update_password(db, current_user.id, data.password)
         return {
-            "status_code": status.HTTP_200_OK,
+            "status": status.HTTP_200_OK,
             "detail": "Your password has been changed.",
         }
     except:
@@ -137,7 +137,7 @@ async def reset_password(data: ResetPasswordSchema, db: Annotated[Session, Depen
                 detail="Mail server error occured. Please try again later.",
             )
     return {
-        "status_code": status.HTTP_200_OK,
+        "status": status.HTTP_200_OK,
         "detail": "Check your mailbox. Message with link to setting new password has been sent.",
     }
 
@@ -152,7 +152,7 @@ async def set_new_password(data: SetNewPasswordSchema, db: Annotated[Session, De
         )
     try:
         await update_password(db, user.id, data.password)
-        return {"status_code": status.HTTP_200, "detail": "Your password has been changed."}
+        return {"status": status.HTTP_200, "detail": "Your password has been changed."}
     except:
         raise server_error_exception
 
@@ -166,7 +166,7 @@ async def change_mailing_status(
     try:
         await update_email_notifications(db, current_user.id, data.email_notifications)
         return {
-            "status_code": status.HTTP_200_OK,
+            "status": status.HTTP_200_OK,
             "detail": "Email notifications status has been changed.",
         }
     except:

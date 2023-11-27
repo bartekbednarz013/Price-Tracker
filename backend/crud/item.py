@@ -84,6 +84,7 @@ async def get_urls_of_tracked_items(db: Session):
                     "expected_price": item.expected_price,
                     "user_id": item.user_id,
                     "user_email": item.user.email,
+                    "email_notifications": item.user.email_notifications,
                 }
             )
         else:
@@ -96,6 +97,7 @@ async def get_urls_of_tracked_items(db: Session):
                         "expected_price": item.expected_price,
                         "user_id": item.user_id,
                         "user_email": item.user.email,
+                        "email_notifications": item.user.email_notifications,
                     }
                 ]
             }

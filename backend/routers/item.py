@@ -39,7 +39,7 @@ async def add_item(
     if created_item.tracked:
         await increase_user_tracked_items(db, current_user.id)
     return {
-        "notification": {"status_code": status.HTTP_201_CREATED, "detail": detail, "duration": 6000},
+        "notification": {"status": status.HTTP_201_CREATED, "detail": detail, "duration": 6000},
         "item": created_item,
     }
 

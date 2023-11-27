@@ -143,6 +143,34 @@ const Scraper = () => {
     <Fragment>
       <div id="url-input-wrapper" className="url-input-wrapper">
         <div className="url-input-header">Paste url to your item</div>
+        <div className="scraper-show-hint">i</div>
+        <div id="scraper-hint" className="scraper-hint">
+          <div className="scraper-hint-corner"></div>
+          To track item you have to create account and add item to yout list.
+          You will receive email notification every time price of your item
+          drops. You can also set expected price and we will inform you only
+          when item reaches indicated price.
+          <br />
+          <div className="shop-list-wrapper">
+            Price tracker works with shops:
+            <div className="shop-list">
+              <li>Zara</li>
+              <li>Mango</li>
+              <li>H&M</li>
+              <li>Reserved</li>
+              <li>noszesztuke</li>
+              <li>factcool</li>
+              <li>Bossino</li>
+              <li>TRIPLÉS</li>
+              <li>HIBOU</li>
+              <li>MARSALA</li>
+              <li>camelie</li>
+              <li>Zalando</li>
+              <li>SKIMS</li>
+              <li>ALOHAS</li>
+            </div>
+          </div>
+        </div>
         <form onSubmit={onScrap}>
           <InputField
             type="text"

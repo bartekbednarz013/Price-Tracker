@@ -36,8 +36,8 @@ def get_scraper(url: HttpUrl):
             return camelie
         case "zalando":
             return zalando
-        case "massimodutti":
-            return massimo_dutti
+        # case "massimodutti":
+        #     return massimo_dutti
         case "skims":
             return skims
         case "alohas":
@@ -109,7 +109,6 @@ async def reserved(url: HttpUrl, price_only: bool = False) -> ScraperOutputSchem
         result.update({"name": item_name, "shop": "Reserved", "currency": currency})
     driver.close()
     return result
-
 
 async def noszesztuke(url: HttpUrl, price_only: bool = False) -> ScraperOutputSchema | ScraperPriceOutputSchema:
     driver = get_headless_driver(url)
@@ -253,7 +252,7 @@ async def zalando(url: HttpUrl, price_only: bool = False) -> ScraperOutputSchema
         result.update({"name": item_name, "shop": "Zalando", "currency": currency})
     return result
 
-
+# no permission to access
 async def massimo_dutti(url: HttpUrl, price_only: bool = False) -> ScraperOutputSchema | ScraperPriceOutputSchema:
     driver = get_headless_driver(url)
     price_string = (

@@ -24,6 +24,8 @@ async def update_tracked_items():
             db = SessionLocal()
             await update_price(db, item["id"], new_price)
             db.close()
+            if not item["email_notifications"]:
+                continue
             if not item["expected_price"] and new_price < item["price"]:
                 mail_content = get_price_dropped_notification_template(item["name"], url)
                 send_mail(item["user_email"], "Price of your item just dropped!", mail_content)
