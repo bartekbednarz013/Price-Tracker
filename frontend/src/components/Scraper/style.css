@@ -38,11 +38,12 @@
   top: 30px;
   right: 30px;
   cursor: pointer;
-  z-index: 5;
+  z-index: 99;
 }
 
 .scraper-show-hint:hover ~ #scraper-hint {
   display: block;
+  z-index: 98;
 }
 
 .scraper-hint {
@@ -52,13 +53,14 @@
   padding: 30px;
   border-radius: 20px;
   box-shadow: rgba(0, 0, 0, 0.12) 0 3px 10px 2px;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.95);
   display: none;
+  text-align: justify;
 }
 
 .scraper-hint-corner {
   width: 50px;
-  height: 50px;
+  height: 40px;
   float: right;
 }
 .shop-list-wrapper {
@@ -66,7 +68,7 @@
 }
 
 .shop-list {
-  columns: 3;
+  columns: 2;
   margin-top: 5px;
 }
 
@@ -261,14 +263,20 @@
   flex-wrap: wrap;
   column-gap: 15px;
   row-gap: 15px;
+  align-items: center;
 }
 
 .sd-options .button {
   width: fit-content;
 }
 
-.sd-options .button:disabled {
-  background-color: grey;
+.login-required-info {
+  display: none;
+  font-size: 13px;
+}
+
+.sd-options .button:hover ~ .login-required-info {
+  display: block;
 }
 
 /* tablets */
@@ -281,8 +289,16 @@
     max-width: 100px;
   }
 
+  .shop-list {
+    columns: 3;
+  }
+
   .scrapped-data-wrapper {
     flex-wrap: nowrap;
+  }
+
+  .sd-options {
+    justify-content: unset;
   }
 }
 
@@ -297,9 +313,9 @@
     top: 2px;
   }
 
-  .sd-options {
+  /* .sd-options {
     flex-direction: column;
-  }
+  } */
 
   .item-options {
     margin: 42px 0 24px;

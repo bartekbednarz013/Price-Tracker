@@ -146,10 +146,12 @@ const Scraper = () => {
         <div className="scraper-show-hint">i</div>
         <div id="scraper-hint" className="scraper-hint">
           <div className="scraper-hint-corner"></div>
-          To track item you have to create account and add item to yout list.
+          To track item you have to create account and add item to your list.
           You will receive email notification every time price of your item
-          drops. You can also set expected price and we will inform you only
-          when item reaches indicated price.
+          drops. You can also set expected price and you will be informed only
+          when item reaches the desired price. You can also turn off email
+          notification completly - your items still will be tracked, but you
+          won't be informed about changes.
           <br />
           <div className="shop-list-wrapper">
             Price tracker works with shops:
@@ -268,6 +270,9 @@ const Scraper = () => {
               onClick={addItemToMyList}
               disabled={!isAuthenticated}
             />
+            {!isAuthenticated && (
+              <div className="login-required-info">Login required</div>
+            )}
           </div>
         </div>
       )}
